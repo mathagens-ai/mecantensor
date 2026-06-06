@@ -1,0 +1,4 @@
+include LICENSE
+include README.md
+recursive-include mecantensor *.py *.dll *.so *.pyd
+recursive-exclude * __pycache__ *.pyc *.obj *.exe *.bin

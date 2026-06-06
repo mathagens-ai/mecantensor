@@ -1,0 +1,54 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.backends._legacy:_Backend"
+
+[project]
+name = "mecantensor"
+version = "2.0.0"
+description = "Universal Hardware-Accelerated Tensor Engine with Sub-Bit Quantization for ASI Training"
+readme = "README.md"
+license = {text = "Apache-2.0"}
+requires-python = ">=3.10"
+authors = [
+    {name = "Mathagens AI"},
+]
+keywords = [
+    "tensor", "deep-learning", "quantization", "1-bit",
+    "binary-neural-network", "inference", "training",
+    "hardware-acceleration", "autograd", "vision"
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Programming Language :: C++",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: POSIX :: Linux",
+]
+dependencies = [
+    "numpy>=1.24",
+]
+
+[project.optional-dependencies]
+opencl = ["pyopencl"]
+dev = ["pytest", "build", "twine"]
+
+[project.urls]
+Homepage = "https://github.com/mathagens-ai/mecantensor"
+Repository = "https://github.com/mathagens-ai/mecantensor"
+Issues = "https://github.com/mathagens-ai/mecantensor/issues"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["mecantensor*"]
+
+[tool.setuptools.package-data]
+mecantensor = ["*.dll", "*.so", "*.pyd"]

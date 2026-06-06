@@ -1,0 +1,45 @@
+# Byte-compiled / optimized
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C++ build artifacts
+*.obj
+*.o
+*.exe
+*.exp
+*.lib
+*.bin
+*.a
+
+# Shared libraries (built from source)
+*.dll
+*.so
+*.dylib
+*.pyd
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+*.egg
+*.whl
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+desktop.ini
+Thumbs.db
+.DS_Store
+
+# Benchmark outputs
+suite_results.txt
