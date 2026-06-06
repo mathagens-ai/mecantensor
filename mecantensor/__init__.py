@@ -10,6 +10,8 @@ Subsystems:
     mecantensor.io        - .mt Paged Serialization (save/load)
     mecantensor.ops       - Core math ops (matmul, add, conv2d, etc)
     mecantensor.tensor    - Low-level C++ tensor bridge (ctypes)
+    mecantensor.lgc       - Logical Gradient Compressor (optimizer)
+    mecantensor.infusion  - SSD Infusion Engine (offload cache)
 
 Usage:
     import mecantensor as mt
@@ -21,8 +23,8 @@ Usage:
     mt.midbits.matvec(weights_075, x)
 """
 
-__version__ = "2.0.0"
-__author__ = "Mathagens AI"
+__version__ = "2.1.0"
+__author__ = "Aryan / MecanLabs"
 
 # ─── Submodule imports (relative) ───
 from . import hal
@@ -34,6 +36,8 @@ from . import ops
 from . import io
 from . import tensor
 from . import vision
+from . import lgc
+from . import infusion
 
 __all__ = [
     "hal",
@@ -45,4 +49,6 @@ __all__ = [
     "io",
     "tensor",
     "vision",
+    "lgc",
+    "infusion",
 ]

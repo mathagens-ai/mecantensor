@@ -27,7 +27,7 @@ print("\n--- 1. IMPORT TEST ---")
 import mecantensor as mt
 test("import mecantensor", True)
 test("__version__ exists", hasattr(mt, '__version__'))
-test("version = 2.0.0", mt.__version__ == "2.0.0")
+test("version = 2.1.0", mt.__version__ == "2.1.0")
 test("hal submodule", hasattr(mt, 'hal'))
 test("hlas submodule", hasattr(mt, 'hlas'))
 test("fluxbits submodule", hasattr(mt, 'fluxbits'))
@@ -36,6 +36,8 @@ test("midbits submodule", hasattr(mt, 'midbits'))
 test("ops submodule", hasattr(mt, 'ops'))
 test("io submodule", hasattr(mt, 'io'))
 test("tensor submodule", hasattr(mt, 'tensor'))
+test("lgc submodule", hasattr(mt, 'lgc'))
+test("infusion submodule", hasattr(mt, 'infusion'))
 
 # ─── 2. HAL Test ───
 print("\n--- 2. HAL DISCOVERY ---")
@@ -119,6 +121,44 @@ x_chunk = np.random.randn(16).astype(np.float32)
 lut = mt.midbits.precompute_lut(x_chunk)
 test("LUT shape", lut.shape == (256,))
 test("LUT not all zero", np.any(lut != 0))
+
+# ─── 10. LGC & Infusion Test ───
+print("\n--- 10. LGC & INFUSION ---")
+try:
+    class DummyParam:
+        def __init__(self, data):
+            self.data = np.array(data, dtype=np.float32)
+            self.grad = None
+            self.requires_grad = True
+
+    p = DummyParam([[1.0, 2.0], [3.0, 4.0]])
+    opt = mt.lgc.LogicalGradientCompressor([p], lr=0.1)
+    
+    # Run step
+    p.grad = np.array([[0.1, -0.2], [0.3, -0.4]], dtype=np.float32)
+    opt.step()
+    
+    test("LGC step executed", np.any(p.data != [[1.0, 2.0], [3.0, 4.0]]))
+    test("LGC state created", id(p) in opt.states)
+    
+    import time
+    import tempfile
+    cache_dir = tempfile.mkdtemp(prefix="mt_infusion_test_")
+    engine = mt.infusion.SSDInfusionEngine(cache_dir, total_model_params=50e9)
+    test_tensor = np.random.randn(10, 10).astype(np.float32)
+    engine.offload_tensor("test_tensor_key", test_tensor)
+    
+    # Retrieve it
+    time.sleep(0.1)  # allow async task to run
+    recovered = engine.retrieve_tensor("test_tensor_key")
+    test("Infusion offload and retrieval", recovered is not None and np.allclose(recovered, test_tensor))
+    del recovered
+    import gc
+    gc.collect()
+    engine.cleanup()
+    test("Infusion cleanup", not os.path.exists(cache_dir))
+except Exception as e:
+    test(f"LGC & INFUSION error: {e}", False)
 
 # ─── Summary ───
 print("\n" + "=" * 60)

@@ -4,32 +4,21 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "mecantensor"
-version = "2.0.0"
-description = "Universal Hardware-Accelerated Tensor Engine with Sub-Bit Quantization for ASI Training"
+version = "2.1.0"
+description = "MecanTensor: Universal Hardware-Accelerated Tensor Engine with LGC, SSD Infusion, FluxBits, QSBits, MidBits, HAL, and HLAS"
 readme = "README.md"
-license = {text = "Apache-2.0"}
+license = {text = "Proprietary — MecanLabs"}
 requires-python = ">=3.10"
 authors = [
-    {name = "Mathagens AI"},
+    {name = "Aryan / MecanLabs"},
 ]
-keywords = [
-    "tensor", "deep-learning", "quantization", "1-bit",
-    "binary-neural-network", "inference", "training",
-    "hardware-acceleration", "autograd", "vision"
-]
+keywords = ["tensor", "ai", "machine-learning", "gpu", "simd", "quantization", "fluxbits"]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
-    "Intended Audience :: Science/Research",
-    "License :: OSI Approved :: Apache Software License",
-    "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11",
-    "Programming Language :: Python :: 3.12",
-    "Programming Language :: Python :: 3.13",
-    "Programming Language :: Python :: 3.14",
-    "Programming Language :: C++",
     "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: C++",
     "Operating System :: Microsoft :: Windows",
     "Operating System :: POSIX :: Linux",
 ]
@@ -39,16 +28,7 @@ dependencies = [
 
 [project.optional-dependencies]
 opencl = ["pyopencl"]
-dev = ["pytest", "build", "twine"]
-
-[project.urls]
-Homepage = "https://github.com/mathagens-ai/mecantensor"
-Repository = "https://github.com/mathagens-ai/mecantensor"
-Issues = "https://github.com/mathagens-ai/mecantensor/issues"
 
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["mecantensor*"]
-
-[tool.setuptools.package-data]
-mecantensor = ["*.dll", "*.so", "*.pyd"]
